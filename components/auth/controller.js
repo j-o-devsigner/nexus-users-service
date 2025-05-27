@@ -8,6 +8,7 @@ module.exports = function(injectedDb) {
 
     const login = async (username, password) => {
         const data = await database.findOne(TABLE, username, "username");
+        console.log(data)
         if (data.length === 0) {
             return { message: "Wrong username or password" }
         }
