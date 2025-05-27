@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/users', router);
-app.use('/', routerAuth);
+app.use('/api/users', router);
+app.use('/api', routerAuth);
 
 app.use(morgan("dev"));
 app.use(errors);
