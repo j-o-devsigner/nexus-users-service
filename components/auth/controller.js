@@ -34,7 +34,7 @@ module.exports = function(injectedDb) {
                     token
                 }
             } else {
-                return { message: "Wrong username or password", newProp: "Saludo" }
+                return { message: "Wrong username or password" }
             }
         });
     };
