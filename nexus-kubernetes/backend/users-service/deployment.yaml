@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: users-service
-          image: 284698404434.dkr.ecr.us-east-1.amazonaws.com/nexus-users-service:latest
+          image: 284698404434.dkr.ecr.us-east-1.amazonaws.com/nexus-users-service:REPLACE_ME
           imagePullPolicy: Always
           resources:
             requests:
