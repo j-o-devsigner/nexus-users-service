@@ -12,9 +12,14 @@ spec:
       labels:
         app: users-service
     spec:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
       containers:
         - name: users-service
-          image: 284698404434.dkr.ecr.us-east-1.amazonaws.com/nexus-users-service:${IMAGE_TAG}
+          image: 284698404434.dkr.ecr.us-east-1.amazonaws.com/nexus-users-service:latest
           imagePullPolicy: Always
           resources:
             requests:
