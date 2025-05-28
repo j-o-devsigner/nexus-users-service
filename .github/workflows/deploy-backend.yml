@@ -30,10 +30,7 @@ jobs:
       - name: Build, tag, and push image to ECR
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
 
       - name: Update kubeconfig using AWS CLI
         run: |
@@ -44,12 +41,11 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Update Kubernetes Deployment
+      - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v5
         with:
           namespace: default
           manifests: |
             nexus-kubernetes/backend/users-service/deployment.yaml
           images: |
-            $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
+            $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
