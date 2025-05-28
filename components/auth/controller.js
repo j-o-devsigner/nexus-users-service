@@ -34,7 +34,7 @@ module.exports = function(injectedDb) {
                     token
                 }
             } else {
-                return { message: "Wrong username or password", status: 401 }
+                return { message: "Wrong username or password", status: 401, error: true }
             }
         });
     };
