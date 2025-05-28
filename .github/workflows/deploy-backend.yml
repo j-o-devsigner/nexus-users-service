@@ -41,6 +41,10 @@ jobs:
         with:
           version: 'latest'
 
+      - name: Debug image tag
+        run: |
+          echo "Image to deploy: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}"
+
       - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v5
         with:
@@ -48,4 +52,5 @@ jobs:
           manifests: |
             nexus-kubernetes/backend/users-service/deployment.yaml
           images: |
-            $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+            ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
