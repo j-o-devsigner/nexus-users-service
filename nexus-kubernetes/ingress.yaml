@@ -10,14 +10,14 @@ spec:
   rules:
     - http:
         paths:
-          - path: /login
-            pathType: Exact
+          - path: /api/login
+            pathType: Prefix
             backend:
               service:
                 name: users-service
                 port:
                   number: 3001
-          - path: /users
+          - path: /api/users
             pathType: Prefix
             backend:
               service:
