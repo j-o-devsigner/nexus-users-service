@@ -1,0 +1,54 @@
+services:
+  db-nexus:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - nexus-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  initdb:
+    image: postgres:16
+    entrypoint: ["/bin/bash", "/init-db.sh"]
+    depends_on:
+      db-nexus:
+        condition: service_healthy
+    volumes:
+      - ./init-sql:/init-sql
+      - ./init-db.sh:/init-db.sh
+    env_file:
+      - .env
+    working_dir: /init-sql
+    networks:
+      - nexus-net
+    restart: "no"
+
+  users-service:
+    build: .
+    container_name: users-service
+    env_file:
+      - .env
+    ports:
+      - "3001:3001"
+    networks:
+      - nexus-net
+    depends_on:
+      - db-nexus
+
+volumes:
+  db_data:
+
+networks:
+  nexus-net:
+    driver: bridge
+    name: nexus-net

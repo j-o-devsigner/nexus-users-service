@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const Controller = require('./index')
-const response = require('../../../network/response')
+const response = require('../../network/response')
 const ControllerAuth = require('../auth/index')
 const bcrypt = require('bcryptjs')
 const checkAuth = require('./secure')

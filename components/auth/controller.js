@@ -8,6 +8,7 @@ module.exports = function(injectedDb) {
 
     const login = async (username, password) => {
         const data = await database.findOne(TABLE, username, "username");
+        console.log(data)
         if (data.length === 0) {
             return { message: "Wrong username or password" }
         }
@@ -33,7 +34,7 @@ module.exports = function(injectedDb) {
                     token
                 }
             } else {
-                return { message: "Wrong username or password" }
+                return { message: "Wrong username or password", status: 401, error: true }
             }
         });
     };
