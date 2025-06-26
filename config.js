@@ -10,4 +10,5 @@ module.exports = {
     database: process.env.DB_NAME,
     jwt_secret: process.env.SECRET,
     users_port: process.env.USERS_PORT,
+    ssl: process.env.DB_SSLMODE || 'disable',
 };
